@@ -1,0 +1,130 @@
+server:
+  port: 9000
+  use-forward-headers: false
+  servlet:
+    context-path: /orve-map
+    
+spring:
+  profiles: default
+  application:
+    name: orve-map
+  datasource:
+    url: jdbc:h2:mem:testdb;Mode=Oracle
+    platform: h2
+    continue-on-error: true
+    username: sa
+    password: sa
+    schema: classpath*:bd/schema-h2.sql
+    data: classpath*:bd/data-h2.sql
+  jpa:
+    hibernate:
+      ddl-auto: none          
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+  h2:
+    console:
+      enabled: true
+      path: /h2
+logging:
+  level: 
+    org.springframework.web: ERROR
+    org.hibernate: ERROR
+    file: C:/Trabajo/Logs/wrapper-rest-orve.log
+    pattern: file= %d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
+     
+env:
+  entry:
+    USER_ORVEMAP: AGE-CSN
+    PASS_ORVEMAP: 1dMZZL5M
+    URL_REGISTRO_ORVE_WS: https://ssweb.seap.minhap.es/demoorve/WSRegistro.php
+    PACKAGE_REGISTRO_ORVE_WS: demoorve.map.rest.registro.ws.core
+    URL_EXPORTACION_ORVE_WS: https://ssweb.seap.minhap.es/demoorve/WSExportacion.php
+    PACKAGE_EXPORTACION_ORVE_WS: demoorve.map.rest.exportacion.registro.ws.core
+    URL_OPERACIONES_ORVE_WS: https://ssweb.seap.minhap.es/demoorve/WSOperaciones.php
+    PACKAGE_OPERACIONES_ORVE_WS: demoorve.map.rest.operaciones.registro.ws.core   
+
+eureka:
+  instance:
+    hostname: localhost
+    port: 9044
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+  server: 
+    wait-time-in-ms-when-sync-empty: 3000
+    
+tipoauth: no_auth
+    
+---
+    
+server:
+  port: 9001
+  use-forward-headers: false
+  servlet:
+    context-path: /orve-map
+    
+spring:
+  profiles: singlems
+  application:
+    name: orve-map
+eureka:
+  instance:
+    hostname: localhost
+    port: 9044
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+  server: 
+    wait-time-in-ms-when-sync-empty: 3000
+    
+---
+    
+server:
+  port: 0
+  use-forward-headers: false
+  servlet:
+    context-path: /orve-map
+    
+spring:
+  profiles: multims
+  application:
+    name: orve-map
+eureka:
+  instance:
+    hostname: localhost
+    port: 9044
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+  server: 
+    wait-time-in-ms-when-sync-empty: 3000
+    
+    
+--- 
+    
+spring:
+  profiles: no_auth
+
+tipoauth: no_auth
+    
+---    
+  
+spring:
+  profiles: bbdd
+
+tipoauth: bbdd
+      
+---    
+
+spring:
+  profiles: auth
+  application:
+    name: orve-map
+        
+tipoauth: auth 
