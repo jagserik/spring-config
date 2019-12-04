@@ -59,7 +59,7 @@ tipoauth: no_auth
 ---
     
 server:
-  port: 9001
+  port: 9000
   use-forward-headers: false
   servlet:
     context-path: /orve-map
