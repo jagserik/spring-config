@@ -40,7 +40,7 @@ env:
     URL_EXPORTACION_ORVE_WS: https://ssweb.seap.minhap.es/demoorve/WSExportacion.php
     PACKAGE_EXPORTACION_ORVE_WS: demoorve.map.rest.exportacion.registro.ws.core
     URL_OPERACIONES_ORVE_WS: https://ssweb.seap.minhap.es/demoorve/WSOperaciones.php
-    PACKAGE_OPERACIONES_ORVE_WS: demoorve.map.rest.operaciones.registro.ws.core   
+    PACKAGE_OPERACIONES_ORVE_WS: demoorve.map.rest.operaciones.registro.ws.core
 
 eureka:
   instance:
